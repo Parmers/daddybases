@@ -5,12 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<title>Reusable Form Demo</title>
-        	 	<link rel="stylesheet" media="screen" href="static/bootstrap.min.css">
-        	 	<link rel="stylesheet" href="static/bootstrap-theme.min.css">
-       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
 
+
+
+</style>
+
+
+
+</head>
 
 <!-- Navigation Bar Code -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -45,6 +49,55 @@
 
 
 <body>
-<h1>This is the FAQ page!</h1>
+  <h1>  FAQ ...</h1>
+
+
+<button onclick="myFunction('Q1')" class="w3-button w3-block w3-left-align">
+Are there age limits for blood donors?</button>
+
+<div id="Q1" class="w3-container w3-hide">
+  <p>Depending on your state, you must be at least 16 or 17 years old. </p>
+</div>
+
+<button onclick="myFunction('Q2')" class="w3-button w3-block w3-left-align">
+How long does it take to donate blood?</button>
+
+<div id="Q2" class="w3-container w3-hide">
+  <p>Collecting the blood only takes around 10 minutes but the entire process typically takes about an hour.</p>
+</div>
+
+<button onclick="myFunction('Q3')" class="w3-button w3-block w3-left-align">
+How often can I donate blood?</button>
+
+<div id="Q3" class="w3-container w3-hide">
+  <p>You can donate blood every 56 days.</p>
+</div>
+
+<button onclick="myFunction('Q4')" class="w3-button w3-block w3-left-align">
+Is it safe to give blood?</button>
+
+<div id="Q4" class="w3-container w3-hide">
+  <p>Yes, donating blood is safe. All supplies used are sterile and only used once. </p>
+</div>
+
+<button onclick="myFunction('Q5')" class="w3-button w3-block w3-left-align">
+Another Question?</button>
+
+<div id="Q5" class="w3-container w3-hide">
+<p>Another answer.</p>
+</div>
+
+
+<script>
+function myFunction(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else {
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
 </body>
 </html>
