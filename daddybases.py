@@ -9,7 +9,9 @@ app.config.from_object(__name__)
 app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
 
 
-
+@app.route('/')
+def home():
+    return render_template('home.html')
 
 @app.route('/results')
 def results():
@@ -19,14 +21,17 @@ def results():
 def FAQ():
     return render_template('FAQ.html')
 
+@app.route('/signin')
+def signin():
+    return render_template('signin.html')
 
 class ReusableForm(Form):
     name = TextField('Name:', validators=[validators.required()])
     email = TextField('Email:', validators=[validators.required(), validators.Length(min=6, max=35)])
     password = TextField('Password:', validators=[validators.required(), validators.Length(min=3, max=35)])
 
-    @app.route("/", methods=['GET', 'POST'])
-    def home():
+    @app.route("/signup", methods=['GET', 'POST'])
+    def signup():
         form = ReusableForm(request.form)
 
         print form.errors
@@ -42,7 +47,7 @@ class ReusableForm(Form):
         else:
             flash('Error: All the form fields are required. ')
 
-        return render_template('home.html', form=form)
+        return render_template('signup.html', form=form)
 
 
 

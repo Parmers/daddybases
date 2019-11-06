@@ -59,11 +59,46 @@
 
 
 <body>
+<div class="container">
+  <h2>Blood Donation Form</h2>
+  <form action="" method="post" role="form">
+      <!-- { { form.csrf }} -->
+  <div class="form-group">
+        <label for="name">Name:</label>
+  <input type="text" class="form-control" id="name" name="name" placeholder="What's your name?">
 
-  <p>
-    This will be our home page
-  </p>
+  <label for="email">Email:</label>
+  <input type="text" class="form-control" id="email" name="email" placeholder="Your email will be used to contact you.">
 
+  <label for="password">Password:</label>
+  <input type="password" class="form-control" id="password" name="password" placeholder="Enter a password.">
 
+  <label for="bloodType">Blood Type:</label>
+  <!-- we can make this a drop down -->
+  <input type=" " class="form-control" id="bloodType" name="bloodType" placeholder="Please enter your blood type. If unknown, write n/a">
+
+</div>
+
+<button type="submit" class="btn btn-success">Sign Up</button>
+</form>{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+
+{% for message in messages %}
+{% if "Error" not in message[1]: %}
+<div class="alert alert-info">
+                <strong>Success! </strong>
+                <!-- { { message[1] }} -->
+              </div>
+  {% endif %}
+
+  {% if "Error" in message[1]: %}
+<div class="alert alert-warning">
+                Please re-enter your information </div>
+  {% endif %}
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+
+</div>
 </body>
 </html>
