@@ -21,17 +21,14 @@ def results():
 def FAQ():
     return render_template('FAQ.html')
 
-@app.route('/signin')
-def signin():
-    return render_template('signin.html')
 
 class ReusableForm(Form):
     name = TextField('Name:', validators=[validators.required()])
     email = TextField('Email:', validators=[validators.required(), validators.Length(min=6, max=35)])
     password = TextField('Password:', validators=[validators.required(), validators.Length(min=3, max=35)])
 
-    @app.route("/signup", methods=['GET', 'POST'])
-    def signup():
+    @app.route("/check", methods=['GET', 'POST'])
+    def check():
         form = ReusableForm(request.form)
 
         print form.errors
@@ -47,7 +44,7 @@ class ReusableForm(Form):
         else:
             flash('Error: All the form fields are required. ')
 
-        return render_template('signup.html', form=form)
+        return render_template('check.html', form=form)
 
 
 
