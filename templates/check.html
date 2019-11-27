@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<title>Blood Donation Sign In</title>
+<title>Donor's form</title>
         	 	<link rel="stylesheet" media="screen" href="static/bootstrap.min.css">
         	 	<link rel="stylesheet" href="static/bootstrap-theme.min.css">
        <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,109 +40,143 @@
   </div>
 </nav>
 <!-- Navigation Bar Code -->
-
-
-
 <body>
 <div class="container">
   <h2>Blood Donation Form</h2>
-  <form action="/script.php" method="post" role="form">
+  <form action="" method="POST" role="form">
       <!-- { { form.csrf }} -->
-  <div class="form-group">
-        <label for="Gender">Gender:</label>
-         <input type="radio" name="gender" value="female">Female
-        <input type="radio" name="gender" value="male">Male
-      <input type="radio" name="gender" value="other">Other
-<br>
-
-  <label for="Age">Age:</label>
-<input type="number" name="Age" size="50">
-<br>
-  <label for="Weight">Weight:</label>
-<input type="number" name="Weight" size="50" step="0.01">
-<br>
-  <label for="BloodType">Blood Type:</label>
-  <input type="radio" name="bloodType" value="A+">A+
-<input type="radio" name="bloodType" value="A-">A-
-<input type="radio" name="bloodType" value="B+">B+
-<input type="radio" name="bloodType" value="O+">O+
-<input type="radio" name="bloodType" value="O-">O-
-<input type="radio" name="bloodType" value="AB+">AB+
-<input type="radio" name="bloodType" value="AB-">AB-
-<br>
-<label for="LastDonate">How many days has it been since you last donated?</label>
-<input type="number" name="LastDonation" size="50" >
-<br>
-<label for="BloodPressure">Blood Pressure:</label>
-<input type="number" name="Bp" size="50" step="any">
-<br>
-<label for="Iron">Iron level:</label>
-<input type="number" name="Ir" size="50" step="any">
-<br>
-<label for="disease">Disease:</label>
-<input type="radio" name="Disease" value="Yes">Yes
-<input type="radio" name="Disease" value="No">No
-<br>
-<label for="Disease_type">If yes, what is it?</label>
-<input type="text" name="Disease_Reply" size="50"></td>
-<br>
-<label for="sick">Are you currently sick? ex) fever,cold and etc </label>
-<input type="radio" name="Sick" value="Yes">Yes
-<input type="radio" name="Sick" value="No">No
-<br>
-<label for="cancer">Cancer:</label>
-<input type="radio" name="Cancer" value="Yes">Yes
-<input type="radio" name="Cancer" value="No">No
-<br>
-<label for="Direction">Direction:</label>
-<input type="text" name="Direction" size="50">
-<br>
-<label for="Tattoo">Tattoo:</label>
-<input type="radio" name="Tattoo" value="Yes">Yes
-<input type="radio" name="Tattoo" value="No">No
-<br>
-<label for="TattooDate">If yes, How many months since you got your last Tattoo?</label>
-<input type="number" name="Tattoo_Reply" size="50">
-<br>
-<label for="Piercing">Piercing?</label>
-<input type="radio" name="Piercing" value="Yes">Yes
-<input type="radio" name="Piercing" value="No">No
-<br>
-<label for="PiercingTime"> If yes, how many months since you got your most recent piercing?</label>
-<input type="number" name="Piercing_Reply" size="50">
-<br>
-<label for="Medication">Medication?</label>
-<input type="radio" name="Medication" value="Yes">Yes
-<input type="radio" name="Medication" value="No">No
-<br>
-<label for="IV">Intravenous drug use?</label>
-<input type="radio" name="IV" value="Yes">Yes
-<input type="radio" name="IV" value="No">No<br>
-<label for="STD">Do you have a STD</label>
-<input type="radio" name="STD" value="Yes">Yes
-<input type="radio" name="STD" value="No">No</td>
-<br>
-<label for="STD_name"> If yes, what is it?</label>
-<input type="text" name="STD_name "size="50">
-<br>
-<label for="pregnant">Are you currently pregnant?</label>
-<input type="radio" name="Pregnant" value="Yes">Yes
-<input type="radio" name="Pregnant" value="No">No
-<br>
-<label for="high-risk">Are you currently involved on a high-risk job? ex) Prostitution?</label>
-<input type="radio" name="HighRisk" value="Yes">Yes
-    <input type="radio" name="HighRisk" value="No">No
-<br>
-<label for="Travel">Have you Travel Internationally?</label>
-<input type="radio" name="Travel" value="Yes">Yes
-  <input type="radio" name="Travel" value="No">No
-<br>
-<label for="Travel_reply">If yes, how many months has it been since you left?</label>
-<input type="number" name="Travel_reply2" size="50">
-<br>
-</div>
-
-<button type="submit" class="btn btn-success">Submit</button>
+      <div class="form-group">
+          <label for="Gender">Gender:</label>
+          <br>
+          <input type="radio" name="gender" value="Female" required>Female
+          <input type="radio" name="gender" value="Male">Male
+          <input type="radio" name="gender" value="Other">Other
+          <br>
+          <br />
+          <label for="Age">Age:</label>
+          <br>
+          <input type="number" name="Age" size="50" required>
+          <br>  <br />
+          <label for="Weight">Weight (Ibs):</label>
+          <br>
+          <input type="number" name="Weight" size="50" step="0.01" required>
+          <br>  <br />
+          <label for="BloodType">Blood Type:</label>
+          <br>
+          <input type="radio" name="bloodType" value="A+" required>A+
+          <input type="radio" name="bloodType" value="A-">A-
+          <input type="radio" name="bloodType" value="B+">B+
+          <input type="radio" name="bloodType" value="O+">O+
+          <input type="radio" name="bloodType" value="O-">O-
+          <input type="radio" name="bloodType" value="AB+">AB+
+          <input type="radio" name="bloodType" value="AB-">AB-
+          <br>  <br />
+          <label for="LastDonate">Has it been more than 56 days since you donate blood? (Note: Yes if you never have donated)</label>
+          <br>
+          <input type="radio" name="LastDonation" value="Yes">Yes
+          <input type="radio" name="LastDonation" value="No" required>No
+          <br>  <br />
+          <label for="BloodPressure">Blood Pressure(Systolic):</label>
+          <br>
+          <input type="number" name="Bp" size="50" step="any" required>
+          <br>  <br />
+          <label for="Iron">Iron level:</label>
+          <br>
+          <input type="number" name="Ir" size="50" step="any" required>
+          <br>  <br />
+          <label for="disease">Disease:</label>
+          <br>
+          <input type="radio" name="Disease" value="Yes">Yes
+          <input type="radio" name="Disease" value="No" required>No
+          <br>  <br />
+          <label for="sick">Are you currently sick? ex) fever,cold and etc </label>
+          <br>
+          <input type="radio" name="Sick" value="Yes">Yes
+          <input type="radio" name="Sick" value="No" required>No
+          <br>
+          <br />
+          <label for="cancer">Cancer:</label>
+          <br>
+          <input type="radio" name="Cancer" value="Yes">Yes
+          <input type="radio" name="Cancer" value="No" required>No
+          <br>
+          <br />
+          <label for="Direction">Direction:</label>
+          <br>
+          <input type="text" name="Direction" size="50" required>
+          <br>
+          <br />
+          <label for="Tattoo">Tattoo:</label>
+          <br>
+          <input type="radio" name="Tattoo" value="Yes">Yes
+          <input type="radio" name="Tattoo" value="No" required>No
+          <br>
+          <br />
+          <label for="TattooDate">If yes, has it been a year since you got the Tattoo?</label>
+          <br>
+          <input type="radio" name="Tattoo_Reply" value="Yes">Yes
+          <input type="radio" name="Tattoo_Reply" value="No">No
+          <input type="radio" name="Tattoo_Reply" value="NA" checked>NA
+          <br>
+          <br />
+          <label for="Piercing">Piercing?</label>
+          <br>
+          <input type="radio" name="Piercing" value="Yes">Yes
+          <input type="radio" name="Piercing" value="No" required>No
+          <br>
+          <br />
+          <label for="PiercingTime"> If yes, has it been a year since you got the Piercing?</label>
+          <br>
+          <input type="radio" name="Piercing_Reply" value="Yes">Yes
+          <input type="radio" name="Piercing_Reply" value="No">No
+          <input type="radio" name="Piercing_Reply" value="NA" checked>NA
+          <br>
+          <br />
+          <label for="Medication">Medication?</label>
+          <br>
+          <input type="radio" name="Medication" value="Yes">Yes
+          <input type="radio" name="Medication" value="No" required>No
+          <br>  <br />
+          <label for="IV">Intravenous drug use?</label>
+          <br>
+          <br />
+          <input type="radio" name="IV" value="Yes">Yes
+          <input type="radio" name="IV" value="No" required>No<br>
+          <br />
+          <label for="STD">Do you have a STD?</label>
+          <br>  <br />
+          <input type="radio" name="STD" value="Yes">Yes
+          <input type="radio" name="STD" value="No" required>No
+          <br>  <br />
+          <label for="STD_name"> If yes, was it Syphillis or Gonorrhea and has it been a year since you have been treated?</label>
+          <br>
+          <input type="radio" name="STD_name" value="Yes">Yes
+          <input type="radio" name="STD_name" value="No">No
+          <input type="radio" name="STD_name" value="NA" checked>NA
+          <br>  <br />
+          <label for="pregnant">Are you currently pregnant?</label>
+          <br>
+          <input type="radio" name="Pregnant" value="Yes">Yes
+          <input type="radio" name="Pregnant" value="No" required>No
+          <br>  <br />
+          <label for="high-risk">Have you been involved on a high-risk job? ex) Prostitution?</label>
+          <br>
+          <input type="radio" name="HighRisk" value="Yes">Yes
+          <input type="radio" name="HighRisk" value="No" required>No
+          <br>  <br />
+          <label for="Travel">Have you Travel Internationally?</label>
+          <br>
+          <input type="radio" name="Travel" value="Yes">Yes
+          <input type="radio" name="Travel" value="No" required>No
+          <br>  <br />
+          <label for="Travel_reply">If yes, has it been more than a year since you traveled?</label>
+          <br>
+          <input type="radio" name="Travel_reply" value="Yes">Yes
+          <input type="radio" name="Travel_reply" value="No">No
+          <input type="radio" name="Travel_reply" value="NA" checked>NA
+          <br>  <br />
+      </div>
+<input type="submit" name="submit" value="Submit" class="btn btn-success">
 </form>{% with messages = get_flashed_messages(with_categories=true) %}
 {% if messages %}
 
