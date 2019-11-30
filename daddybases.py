@@ -9,10 +9,6 @@ DEBUG = True
 app = Flask(__name__)
 app.config.from_object(__name__)
 app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
-#app.config['MYSQL_USER'] = 'root'
-#app.config['MYSQL_PASSWORD'] = 'password123!'
-#app.config['MYSQL_DB'] = 'db'
-
 #mysql = MySQL(app)
 
 @app.route('/home')
@@ -60,28 +56,28 @@ class ReusableForm(Form):
         if request.method == 'POST': 
             sqlformula="INSERT INTO `db1`.`users_info` (`IP`, `Gender`, `Age`, `Weight`, `BloodType`, `LastBloodDonation`, `Blood_Pressure`, `Iron`, `Disease`, `Sick`, `Cancer`, `Direction`, `Tattoo`, `Tattoo_reply`, `Piercing`, `Piercing_Date`, `Medication`, `IV`, `STD`, `STD_reply`, `Pregnant`, `HighRisk`, `Travel`, `TravelReply`, `Eligible`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
             Gender=request.form['gender'] 
-            Age=request.form['Age'] #
-            Weight=request.form['Weight']#
-            Iron=request.form['Ir'] #
-            Blood_Pressure=request.form['Bp']#
-            Bloodtype=request.form['bloodType'] #
-            Direction=request.form['Direction'] #
+            Age=request.form['Age'] 
+            Weight=request.form['Weight']
+            Iron=request.form['Ir'] 
+            Blood_Pressure=request.form['Bp']
+            Bloodtype=request.form['bloodType'] 
+            Direction=request.form['Direction'] 
             Disease=request.form['Disease']
-            LastBloodDonation=request.form['LastDonation'] #
-            Sick=request.form['Sick'] #
-            Cancer=request.form['Cancer'] #
-            Tattoo=request.form['Tattoo']#
-            Tattoo_reply=request.form['Tattoo_Reply']#
-            Piercing=request.form['Piercing'] #
-            Piercing_Date=request.form['Piercing_Reply']#
+            LastBloodDonation=request.form['LastDonation'] 
+            Sick=request.form['Sick'] 
+            Cancer=request.form['Cancer'] 
+            Tattoo=request.form['Tattoo']
+            Tattoo_reply=request.form['Tattoo_Reply']
+            Piercing=request.form['Piercing'] 
+            Piercing_Date=request.form['Piercing_Reply']
             Medication=request.form['Medication']
-            IV=request.form['IV'] #
+            IV=request.form['IV'] 
             STD=request.form['STD']
-            STD_Name=request.form['STD_name']#
-            Pregnant=request.form['Pregnant']#
-            HighRisk=request.form['HighRisk'] #
-            Travel=request.form['Travel'] #
-            TravelDate=request.form['Travel_reply'] #
+            STD_Name=request.form['STD_name']
+            Pregnant=request.form['Pregnant']
+            HighRisk=request.form['HighRisk'] 
+            Travel=request.form['Travel'] 
+            TravelDate=request.form['Travel_reply'] 
                      #(IP,Gender,Age,Weight,BloodType,LastBloodDonation,Blood_Pressure,Iron,Disease,Sick,Cancer,Direction,Tattoo,Tattoo_reply,Piercing,Piercing_Date,Medicaton,IV,STD,STD_reply,Pregnant,HighRisk,Travel,TravelReply,Eligible)
             ValidCase=(IPAddr,Gender,str(Age),str(Weight),Bloodtype,LastBloodDonation,str(Blood_Pressure),str(Iron),Disease,Sick,Cancer,Direction,Tattoo,Tattoo_reply,Piercing,Piercing_Date,Medication,IV,STD,STD_Name,Pregnant,HighRisk,Travel,TravelDate,'Valid')
             VagueCase=(IPAddr,Gender,str(Age),str(Weight),Bloodtype,LastBloodDonation,str(Blood_Pressure),str(Iron),Disease,Sick,Cancer,Direction,Tattoo,Tattoo_reply,Piercing,Piercing_Date,Medication,IV,STD,STD_Name,Pregnant,HighRisk,Travel,TravelDate,'Vague')
@@ -116,7 +112,7 @@ class ReusableForm(Form):
                 results=cur.fetchone()
             except:
                 print "Error"
-            if  Age <17 or Sick=='Yes'or Pregnant=='Yes' or Cancer=='Yes' or IV=='Yes' or Weight <110 or HighRisk=='Yes'or (Iron<=13 and Gender=='Male' or Iron<=12.5 and Gender=='Female' or Iron<=13.0 and Gender=='Other') or LastBloodDonation =='No' or (Tattoo =='Yes' and Tattoo_reply=='No') or (Piercing =='Yes' and Piercing_Date=='No') or (Travel =='Yes' and TravelDate=='No') or (STD =='Yes'  and STD_Name=='No'):
+            if  int(Age) <17 or Sick=='Yes'or Pregnant=='Yes' or Cancer=='Yes' or IV=='Yes' or int(Weight) <110 or HighRisk=='Yes'or (float(Iron)<=13 and Gender=='Male' or float(Iron)<=12.5 and Gender=='Female' or float(Iron)<=13.0 and Gender=='Other') or LastBloodDonation =='No' or (Tattoo =='Yes' and Tattoo_reply=='No') or (Piercing =='Yes' and Piercing_Date=='No') or (Travel =='Yes' and TravelDate=='No') or (STD =='Yes'  and STD_Name=='No') or int(Blood_Pressure)<90 or int(Blood_Pressure)>180:
                 try:             
                      update2=(IPAddr,Gender,Age,Weight,Bloodtype,LastBloodDonation,Blood_Pressure,Iron,Disease,Sick,Cancer,Direction,Tattoo,Tattoo_reply,Piercing,Piercing_Date,Medication,IV,STD,STD_Name,Pregnant,HighRisk,Travel,TravelDate,"Invalid",IPAddr)
                      for x in results:
