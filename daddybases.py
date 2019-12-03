@@ -3,6 +3,7 @@ from wtforms import Form, TextField, TextAreaField, validators, StringField, Sub
 #from flask_mysqldb import MYSQL
 import socket
 import mysql.connector
+import requests, json
 
 # App config.
 DEBUG = True
@@ -17,6 +18,62 @@ def home():
 
 @app.route('/results')
 def results():
+    address = "tallahassee"
+    api_key = 'AIzaSyABlmN66Scj0b9xr85WiduJPhigsMJoHy0'
+
+    #lat_list = []
+    #long_list = []
+    #name_list = []
+
+    # url variable store url
+    url = "https://maps.googleapis.com/maps/api/place/textsearch/json?"
+
+    # The text string on which to search
+    query = raw_input('Search query:')
+
+    # get method of requests module
+    # return response object
+    r = requests.get(url + 'query=' + query +
+                     '&key=' + api_key)
+
+    # json method of response object convert
+    #  json format data into python format data
+    x = r.json()
+
+    # now x contains list of nested dictionaries
+    # we know dictionary contain key value pair
+    # store the value of result key in variable y
+    y = x['results']
+
+    # keep looping upto length of y
+
+    for i in range(len(y)):
+        # Print value corresponding to the
+        # 'name' key at the ith index of y
+        # print(y[i]['geometry']['location'])
+
+        lat = y[i]['geometry']['location']['lat']
+        lng = y[i]['geometry']['location']['lng']
+        name = y[i]['name']
+        address = y[i]['formatted_address']
+
+        # print(y[i]['name'])
+
+        #lat_list.append(getLat(y[i]))
+        #long_list.append(getLong(y[i]))
+        #name_list.append(getName(y[i]))
+
+        print("i")
+        # address = y[i]['formatted_address']
+
+    # url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + address
+    # jsonurl = urlopen(url)
+
+    # text = json.loads(jsonurl.read())
+    # print (text['results'][0]["formatted_address"])
+    # print (text['results'][0]["geometry"]['location']["lat"])
+    # print (text['results'][0]["geometry"]['location']["lng"])
+
     return render_template('results.html')
 
 @app.route('/Valid')
@@ -154,6 +211,40 @@ class ReusableForm(Form):
           
 
         return render_template('check.html')
+
+
+def getBanks():
+    # importing required modules
+
+
+    # enter your api key here
+    api_key = 'Your_API_key'
+
+    # url variable store url
+    url = "https://maps.googleapis.com/maps/api/place/textsearch/json?"
+
+    # The text string on which to search
+    query = input('Search query: ')
+
+    # get method of requests module
+    # return response object
+    r = requests.get(url + 'query=' + query +
+                     '&key=' + api_key)
+
+    # json method of response object convert
+    #  json format data into python format data
+    x = r.json()
+
+    # now x contains list of nested dictionaries
+    # we know dictionary contain key value pair
+    # store the value of result key in variable y
+    y = x['results']
+
+    # keep looping upto length of y
+    for i in range(len(y)):
+        # Print value corresponding to the
+        # 'name' key at the ith index of y
+        print(y[i]['name'])
 
 
 if __name__ == "__main__":
