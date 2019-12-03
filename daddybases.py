@@ -3,13 +3,13 @@ from wtforms import Form, TextField, TextAreaField, validators, StringField, Sub
 #from flask_mysqldb import MYSQL
 import socket
 import mysql.connector
-
+import requests, json
+from urllib import urlopen
 # App config.
 DEBUG = True
 app = Flask(__name__)
 app.config.from_object(__name__)
 app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
-#mysql = MySQL(app)
 
 @app.route('/home')
 def home():
@@ -17,6 +17,42 @@ def home():
 
 @app.route('/results')
 def results():
+    try:
+            hostname = socket.gethostname()    
+            IPAddr = socket.gethostbyname(hostname)    
+            IPAddr= str(IPAddr)
+    except:
+            print "Error"
+    db = mysql.connector.connect(host="127.0.0.1", port =3306,user="root", passwd="password123!", database='db1',autocommit=True, auth_plugin='mysql_native_password')
+    print "Here"+ City 
+    cur = db.cursor()
+    api_key = 'AIzaSyABlmN66Scj0b9xr85WiduJPhigsMJoHy0'
+    # url variable store url
+    url = "https://maps.googleapis.com/maps/api/place/textsearch/json?"
+
+    # The text string on which to search
+   # query = raw_input('Search query:')
+
+    # get method of requests module
+    # return response object
+    r = requests.get(url + 'query=' + City + 'Bloody Bank'+
+                     '&key=' + api_key)
+    x = r.json()
+    y = x['results']
+    for i in range(len(y)):
+        lat = y[i]['geometry']['location']['lat']
+        lng = y[i]['geometry']['location']['lng']
+        name = y[i]['name']
+        address = y[i]['formatted_address']
+        print lat
+        print lng
+        print name
+        print address
+        Formula=(lat,lng,IPAddr,name,address)
+        formula="INSERT INTO `db1`.`organization` (`Latitude`, `Longitude`, `IP`, `Name`, `Street Address`) VALUES (%s, %s, %s, %s, %s)"
+        cur.execute(formula,Formula)
+        db.commit()
+
     return render_template('results.html')
 
 @app.route('/Valid')
@@ -34,9 +70,7 @@ def FAQ():
 
 
 class ReusableForm(Form):
-    #name = TextField('Name:', validators=[validators.required()])
-    #//email = TextField('Email:', validators=[validators.required(), validators.Length(min=6, max=35)])
-    #password = TextField('Password:', validators=[validators.required(), validators.Length(min=3, max=35)])
+
     
     @app.route("/check", methods=['GET', 'POST'])
     def check():
@@ -48,11 +82,6 @@ class ReusableForm(Form):
             print "Error"
         db = mysql.connector.connect(host="127.0.0.1", port =3306,user="root", passwd="password123!", database='db1',autocommit=True, auth_plugin='mysql_native_password')
         cur = db.cursor()
-        #cur = mysql.connection.cursor()
-        #mysql.connection.commit()
-        #cur.close()
-        #form = ReusableForm(request.form)
-        #print form.errors
         if request.method == 'POST': 
             sqlformula="INSERT INTO `db1`.`users_info` (`IP`, `Gender`, `Age`, `Weight`, `BloodType`, `LastBloodDonation`, `Blood_Pressure`, `Iron`, `Disease`, `Sick`, `Cancer`, `Direction`, `Tattoo`, `Tattoo_reply`, `Piercing`, `Piercing_Date`, `Medication`, `IV`, `STD`, `STD_reply`, `Pregnant`, `HighRisk`, `Travel`, `TravelReply`, `Eligible`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
             Gender=request.form['gender'] 
@@ -62,6 +91,8 @@ class ReusableForm(Form):
             Blood_Pressure=request.form['Bp']
             Bloodtype=request.form['bloodType'] 
             Direction=request.form['Direction'] 
+            global City
+            City = Direction
             Disease=request.form['Disease']
             LastBloodDonation=request.form['LastDonation'] 
             Sick=request.form['Sick'] 
@@ -78,33 +109,9 @@ class ReusableForm(Form):
             HighRisk=request.form['HighRisk'] 
             Travel=request.form['Travel'] 
             TravelDate=request.form['Travel_reply'] 
-                     #(IP,Gender,Age,Weight,BloodType,LastBloodDonation,Blood_Pressure,Iron,Disease,Sick,Cancer,Direction,Tattoo,Tattoo_reply,Piercing,Piercing_Date,Medicaton,IV,STD,STD_reply,Pregnant,HighRisk,Travel,TravelReply,Eligible)
             ValidCase=(IPAddr,Gender,str(Age),str(Weight),Bloodtype,LastBloodDonation,str(Blood_Pressure),str(Iron),Disease,Sick,Cancer,Direction,Tattoo,Tattoo_reply,Piercing,Piercing_Date,Medication,IV,STD,STD_Name,Pregnant,HighRisk,Travel,TravelDate,'Valid')
             VagueCase=(IPAddr,Gender,str(Age),str(Weight),Bloodtype,LastBloodDonation,str(Blood_Pressure),str(Iron),Disease,Sick,Cancer,Direction,Tattoo,Tattoo_reply,Piercing,Piercing_Date,Medication,IV,STD,STD_Name,Pregnant,HighRisk,Travel,TravelDate,'Vague')
             InvalidCase=(IPAddr,Gender,str(Age),str(Weight),Bloodtype,LastBloodDonation,str(Blood_Pressure),str(Iron),Disease,Sick,Cancer,Direction,Tattoo,Tattoo_reply,Piercing,Piercing_Date,Medication,IV,STD,STD_Name,Pregnant,HighRisk,Travel,TravelDate,'Invalid')
-            print "Gender:"+Gender +"\n"
-            print "Age:"+Age +"\n"
-            print "Weight:"+Weight +"\n"
-            print "Bloodtype:"+Bloodtype +"\n"
-            print "LastBloodDonation:"+LastBloodDonation +"\n"
-            print "Blood_Pressure:"+Blood_Pressure +"\n"
-            print "Iron:"+Iron +"\n"
-            print "Disease:"+Disease +"\n"
-            print "Sick:"+Sick +"\n"
-            print "Cancer:"+Cancer +"\n"
-            print "Direction:"+Direction +"\n"
-            print "Tattoo:"+Tattoo +"\n"
-            print "Tattoo_reply:"+Tattoo_reply +"\n"
-            print "Piercing:"+Piercing +"\n"
-            print "Piercing_Date:"+Piercing_Date +"\n"
-            print "Medication:"+Medication +"\n"
-            print "IV:"+IV +"\n"
-            print "STD:"+STD +"\n"
-            print "STD_Name:"+STD_Name +"\n"
-            print "Pregnant:"+Pregnant +"\n"
-            print "HighRisk:"+HighRisk +"\n"
-            print "Travel:"+Travel +"\n"
-            print "TravelDate:"+TravelDate +"\n"
             update= "UPDATE `db1`.`users_info` SET `IP` = %s , `Gender` = %s, `Age` =%s , `Weight` =%s , `BloodType` = %s, `LastBloodDonation` = %s , `Blood_Pressure` =%s, `Iron` =%s , `Disease` =%s , `Sick` =%s , `Cancer` =%s , `Direction` =%s , `Tattoo` = %s, `Tattoo_reply` = %s, `Piercing` =%s , `Piercing_Date` =%s , `Medication` =%s , `IV` = %s, `STD` =%s , `STD_reply` =%s , `Pregnant` =%s , `HighRisk` = %s, `Travel` =%s , `TravelReply` =%s , `Eligible` = %s WHERE (`IP` = %s)"
 
             try:
