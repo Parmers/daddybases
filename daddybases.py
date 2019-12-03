@@ -35,8 +35,12 @@ def results():
 
     # get method of requests module
     # return response object
-    r = requests.get(url + 'query=' + City + 'Bloody Bank'+
+    blood = ' Blood Bank'
+    store = City
+    value = store + blood
+    r = requests.get(url + 'query=' + value +
                      '&key=' + api_key)
+    print City
     x = r.json()
     y = x['results']
     for i in range(len(y)):
@@ -44,14 +48,19 @@ def results():
         lng = y[i]['geometry']['location']['lng']
         name = y[i]['name']
         address = y[i]['formatted_address']
-        print lat
-        print lng
-        print name
-        print address
+        print "Lat:"+str(lat)
+        print "lng:"+ str(lng)
+        print "name:"+name
+        print "Address:"+address
         Formula=(lat,lng,IPAddr,name,address)
         formula="INSERT INTO `db1`.`organization` (`Latitude`, `Longitude`, `IP`, `Name`, `Street Address`) VALUES (%s, %s, %s, %s, %s)"
-        cur.execute(formula,Formula)
-        db.commit()
+        try:   
+            cur.execute(formula,Formula)
+            db.commit()
+        except:
+            print "WTF ERROR"
+            pass
+   
 
     return render_template('results.html')
 
@@ -90,7 +99,7 @@ class ReusableForm(Form):
             Iron=request.form['Ir'] 
             Blood_Pressure=request.form['Bp']
             Bloodtype=request.form['bloodType'] 
-            Direction=request.form['Direction'] 
+            Direction=request.form['Direction']
             global City
             City = Direction
             Disease=request.form['Disease']
