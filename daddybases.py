@@ -29,7 +29,7 @@ def results():
             print "Error"
     db = mysql.connector.connect(host="127.0.0.1", port =3306,user="root", passwd="password123!", database='db1',autocommit=True, auth_plugin='mysql_native_password')
     print "Here"+ City 
-    cur = db.cursor()
+    cur = db.cursor(buffered=True)
     api_key = 'AIzaSyABlmN66Scj0b9xr85WiduJPhigsMJoHy0'
     # url variable store url
     url = "https://maps.googleapis.com/maps/api/place/textsearch/json?"
@@ -74,8 +74,11 @@ def results():
             pass
    
     mymap = Map(identifier="view-side",lat=30.4491,lng=-84.2985, markers=coordList)
-
-    return render_template('results.html', mymap=mymap)
+    getjoint="SELECT db1.users_info.IP,db1.organization.latitude,db1.organization.Longitude,db1.organization.Name,db1.organization.Street_Address FROM users_info left JOIN organization ON users_info.IP=organization.IP"
+    cur.execute(getjoint)
+    db.commit()
+    data = cur.fetchall()
+    return render_template('results.html', mymap=mymap,data=data)
 
 @app.route('/Valid')
 def Valid():

@@ -43,12 +43,19 @@
 </nav>
 <!-- Navigation Bar Code -->
 {{mymap.html}}
+{% for item in data %}
+<tr>
+    <td>{{item[3]}}</td>
+    <td>{{item[4]}}</td>
+    <br />
+</tr>
+{% endfor %}
 
 
 
 
 
 <body>
-    <h1>This is the page to depict the results</h1>
+
 </body>
 </html>
