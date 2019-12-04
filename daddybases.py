@@ -43,7 +43,6 @@ def results():
     value = store + blood
     r = requests.get(url + 'query=' + value +
                      '&key=' + api_key)
-    print City
     x = r.json()
     y = x['results']
     coordList = []
