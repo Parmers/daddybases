@@ -5,7 +5,7 @@ import socket
 import mysql.connector
 from flask_googlemaps import GoogleMaps
 from flask_googlemaps import Map
-
+City="Tallahassee"
 import requests, json
 from urllib import urlopen
 # App config.
@@ -28,7 +28,6 @@ def results():
     except:
             print "Error"
     db = mysql.connector.connect(host="127.0.0.1", port =3306,user="root", passwd="password123!", database='db1',autocommit=True, auth_plugin='mysql_native_password')
-    print "Here"+ City 
     cur = db.cursor(buffered=True)
     api_key = 'AIzaSyABlmN66Scj0b9xr85WiduJPhigsMJoHy0'
     # url variable store url
@@ -48,6 +47,9 @@ def results():
     x = r.json()
     y = x['results']
     coordList = []
+    delete_state="DELETE FROM `db1`.`organization` WHERE IP = %s" 
+    cur.execute(delete_state,(IPAddr,))
+    db.commit()
     for i in range(len(y)):
         lat = y[i]['geometry']['location']['lat']
         lng = y[i]['geometry']['location']['lng']
@@ -55,13 +57,9 @@ def results():
         coordList.append(tuple((lat,lng)))
         name = y[i]['name']
         address = y[i]['formatted_address']
-        print "Lat:"+str(lat)
-        print "lng:"+ str(lng)
-        print "name:"+name
-        print "Address:"+address
         Formula=(lat,lng,IPAddr,name,address)
         formula="INSERT INTO `db1`.`organization` (`Latitude`, `Longitude`, `IP`, `Name`, `Street_Address`) VALUES (%s, %s, %s, %s, %s)"
-        try:   
+        try:  
             cur.execute(formula,Formula)
             db.commit()
         except:
@@ -70,7 +68,7 @@ def results():
             db.commit()
             cur.execute(formula,Formula)
             db.commit()
-            print "WTF ERROR"
+            print "The same city was selected therefore clear it."
             pass
    
     mymap = Map(identifier="view-side",lat=30.4491,lng=-84.2985, markers=coordList)
