@@ -3,6 +3,9 @@ from wtforms import Form, TextField, TextAreaField, validators, StringField, Sub
 #from flask_mysqldb import MYSQL
 import socket
 import mysql.connector
+from flask_googlemaps import GoogleMaps
+from flask_googlemaps import Map
+
 import requests, json
 from urllib import urlopen
 # App config.
@@ -10,6 +13,7 @@ DEBUG = True
 app = Flask(__name__)
 app.config.from_object(__name__)
 app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
+GoogleMaps(app, key="AIzaSyABlmN66Scj0b9xr85WiduJPhigsMJoHy0")
 
 @app.route('/home')
 def home():
@@ -43,9 +47,12 @@ def results():
     print City
     x = r.json()
     y = x['results']
+    coordList = []
     for i in range(len(y)):
         lat = y[i]['geometry']['location']['lat']
         lng = y[i]['geometry']['location']['lng']
+        
+        coordList.append(tuple((lat,lng)))
         name = y[i]['name']
         address = y[i]['formatted_address']
         print "Lat:"+str(lat)
@@ -53,16 +60,22 @@ def results():
         print "name:"+name
         print "Address:"+address
         Formula=(lat,lng,IPAddr,name,address)
-        formula="INSERT INTO `db1`.`organization` (`Latitude`, `Longitude`, `IP`, `Name`, `Street Address`) VALUES (%s, %s, %s, %s, %s)"
+        formula="INSERT INTO `db1`.`organization` (`Latitude`, `Longitude`, `IP`, `Name`, `Street_Address`) VALUES (%s, %s, %s, %s, %s)"
         try:   
             cur.execute(formula,Formula)
             db.commit()
         except:
+            delete_state="DELETE FROM `db1`.`organization` WHERE IP = %s"       
+            cur.execute(delete_state,(IPAddr,))
+            db.commit()
+            cur.execute(formula,Formula)
+            db.commit()
             print "WTF ERROR"
             pass
    
+    mymap = Map(identifier="view-side",lat=30.4491,lng=-84.2985, markers=coordList)
 
-    return render_template('results.html')
+    return render_template('results.html', mymap=mymap)
 
 @app.route('/Valid')
 def Valid():
